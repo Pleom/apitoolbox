@@ -5,7 +5,7 @@
 
 > Stateless API Mapping Context for LLM Tooling
 
-## What Are API Tool Box Tools? 🔧
+## Better than MCP? 🔧
 
 API Tool Box tools are **direct API mappings** that convert service APIs into LLM-compatible tool definitions. Each tool represents a specific API endpoint with proper parameter validation and response schemas.
 
