@@ -29,7 +29,7 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write src/**/*.ts",
     "format:check": "prettier --check src/**/*.ts",
-    "prepare": "husky install",
+    "prepare": "",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
