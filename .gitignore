@@ -1,0 +1,49 @@
+# Dependency directories
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+
+# Build outputs
+dist/
+build/
+lib/
+out/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Coverage directory
+coverage/
+
+# Logs
+logs/
+*.log
+
+# Cache directories
+.cache/
+.npm/
+.eslintcache
+.parcel-cache
+
+# Specific files to ignore
+test-sdk/
+tools/server/services/
+
+# Misc
+.DS_Store
+Thumbs.db
