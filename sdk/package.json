@@ -1,7 +1,14 @@
 {
   "name": "apitoolbox",
   "version": "1.0.0",
-  "description": "A TypeScript SDK for API tools",
+  "description": "Stateless API Mapping Context for LLM Tooling",
+  "author": "Royce Arockiasamy <royce@pleom.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pleom/apitoolbox.git"
+  },
+  "homepage": "https://apitoolbox.dev",
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -31,8 +38,6 @@
     "typescript",
     "tools"
   ],
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
