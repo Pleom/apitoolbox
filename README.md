@@ -5,6 +5,29 @@
 
 > Stateless API Mapping Context for LLM Tooling
 
+## What Are API Tool Box Tools? 🔧
+
+API Tool Box tools are **direct API mappings** that convert service APIs into LLM-compatible tool definitions. Each tool represents a specific API endpoint with proper parameter validation and response schemas.
+
+**Example:** Check out [apitoolbox.dev/services/vercel/access-groups](https://apitoolbox.dev/services/vercel/access-groups) to see what Vercel access group tools look like - they're simply structured API mappings.
+
+### 🤖 Programmatic Tool Generation
+
+Tools can be generated automatically using web scrapers and API documentation parsers. For example, all Vercel tools were generated using the [apitoolbox-scraper](https://github.com/Pleom/apitoolbox-scraper) which extracts API definitions and converts them into ATB tool format.
+
+## Why API Tool Box vs MCP? 🥊
+
+| Feature                | API Tool Box ✅                               | MCP ❌                                       |
+| ---------------------- | --------------------------------------------- | -------------------------------------------- |
+| **Architecture**       | Stateless - no servers required               | Stateful - requires multiple running servers |
+| **Execution Model**    | Pure API requests                             | Executes arbitrary code                      |
+| **Multi-user Support** | ✅ Single server supports multiple users/SaaS | ❌ Complex server management per user        |
+| **Service Ecosystem**  | ✅ Centralized monorepo for all services      | ❌ Disconnected repositories                 |
+| **Scalability**        | ✅ Lightweight, scales horizontally           | ❌ Heavy resource requirements               |
+| **Security**           | ✅ No code execution, API-only                | ❌ Code execution security concerns          |
+
+**🎯 Goal:** Build a comprehensive monorepo of all service integrations, creating a single source of truth for LLMs to connect to any API.
+
 ## Installation
 
 ```bash
