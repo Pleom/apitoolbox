@@ -1,6 +1,11 @@
-# ApiToolBox
+# ApiToolBox SDK
+
+[![npm version](https://img.shields.io/npm/v/apitoolbox.svg)](https://www.npmjs.com/package/apitoolbox)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > Stateless API Mapping Context for LLM Tooling
+
+ApiToolBox is a TypeScript SDK that provides a stateless API mapping context for Language Model (LLM) tooling.
 
 ## Installation
 
@@ -11,43 +16,43 @@ npm install apitoolbox
 ## Quick Start
 
 ```typescript
-import { ApiToolBox, User, ToolCallError } from "apitoolbox";
+import { ApiToolBox, User, ToolCallError } from 'apitoolbox';
 
 async function main() {
   // Create an ApiToolBox instance
   const atb = new ApiToolBox();
 
   // Load services (downloads and connects service definitions)
-  await atb.loadServices(["vercel"]);
+  await atb.loadServices(['vercel']);
 
   // List available tools
   const tools = await atb.listTools();
-  console.log("Available tools:", tools);
+  console.log('Available tools:', tools);
 
   // Create a user with service configurations
   const user = new User(atb, [
     {
-      name: "vercel",
+      name: 'vercel',
       config: {
-        apiKey: "Bearer YOUR_API_KEY_HERE",
+        apiKey: 'Bearer YOUR_API_KEY_HERE',
       },
     },
   ]);
 
   try {
     // Call a specific tool
-    const result = await user.callTool("vercelFindAProjectByIdOrName", {
+    const result = await user.callTool('vercelFindAProjectByIdOrName', {
       parameters: {
-        idOrName: "your-project-id",
+        idOrName: 'your-project-id',
       },
     });
 
-    console.log("Result:", result);
+    console.log('Result:', result);
   } catch (error) {
     if (error instanceof ToolCallError) {
-      console.error("Tool call failed:", error.message);
+      console.error('Tool call failed:', error.message);
     } else {
-      console.error("Unexpected error:", error);
+      console.error('Unexpected error:', error);
     }
   }
 }
@@ -95,17 +100,17 @@ Configure services with API keys and other settings:
 ```typescript
 const serviceConfigs = [
   {
-    name: "vercel",
+    name: 'vercel',
     config: {
-      apiKey: "Bearer YOUR_VERCEL_TOKEN",
+      apiKey: 'Bearer YOUR_VERCEL_TOKEN',
       // Additional service-specific config
     },
   },
   {
-    name: "github",
+    name: 'github',
     config: {
-      apiKey: "Bearer YOUR_GITHUB_TOKEN",
-      baseUrl: "https://api.github.com", // Optional custom base URL
+      apiKey: 'Bearer YOUR_GITHUB_TOKEN',
+      baseUrl: 'https://api.github.com', // Optional custom base URL
     },
   },
 ];
@@ -120,14 +125,14 @@ ApiToolBox supports multiple LLM tool formats:
 ### Gemini Format (Default)
 
 ```typescript
-const tools = await atb.listTools("gemini");
+const tools = await atb.listTools('gemini');
 // Returns tools in Gemini function calling format
 ```
 
 ### OpenAI Format
 
 ```typescript
-const tools = await atb.listTools("openai");
+const tools = await atb.listTools('openai');
 // Returns tools wrapped in OpenAI function format:
 // { type: 'function', function: { name, description, parameters } }
 ```
@@ -135,7 +140,7 @@ const tools = await atb.listTools("openai");
 ### Claude Format
 
 ```typescript
-const tools = await atb.listTools("claude");
+const tools = await atb.listTools('claude');
 // Returns tools in Claude format with input_schema
 ```
 
@@ -145,14 +150,14 @@ Use the `ToolCallError` class for proper error handling:
 
 ```typescript
 try {
-  const result = await user.callTool("toolName", { parameters: {} });
+  const result = await user.callTool('toolName', { parameters: {} });
 } catch (error) {
   if (error instanceof ToolCallError) {
     // Handle tool-specific errors
-    console.error("Tool error:", error.message);
+    console.error('Tool error:', error.message);
   } else {
     // Handle other errors
-    console.error("Unexpected error:", error);
+    console.error('Unexpected error:', error);
   }
 }
 ```
@@ -166,9 +171,9 @@ Load specific tool groups from services:
 ```typescript
 // Load specific tool groups
 await atb.loadServices([
-  "vercel",
-  "vercel/access-groups",
-  "github/repositories",
+  'vercel',
+  'vercel/access-groups',
+  'github/repositories',
 ]);
 ```
 
@@ -181,12 +186,12 @@ Find and inspect tools:
 const allTools = await atb.listTools();
 
 // Find a specific tool
-const tool = atb.findToolById("vercelRetrieveAListOfProjects");
+const tool = atb.findToolById('vercelRetrieveAListOfProjects');
 
 if (tool) {
-  console.log("Tool description:", tool.description);
-  console.log("Tool parameters:", tool.parameters);
-  console.log("Tool response schema:", tool.response);
+  console.log('Tool description:', tool.description);
+  console.log('Tool parameters:', tool.parameters);
+  console.log('Tool response schema:', tool.response);
 }
 ```
 
@@ -195,8 +200,8 @@ if (tool) {
 Validate API responses against tool schemas:
 
 ```typescript
-const result = await user.callTool("toolName", { parameters: {} });
-const isValid = await user.validateToolCall("toolName", result);
+const result = await user.callTool('toolName', { parameters: {} });
+const isValid = await user.validateToolCall('toolName', result);
 
 if (!isValid) {
   console.warn("Response doesn't match expected schema");
@@ -216,7 +221,7 @@ import {
   ToolCallError,
   ToolName,
   ApiToolBoxConfig,
-} from "apitoolbox";
+} from 'apitoolbox';
 ```
 
 ## Directory Structure
