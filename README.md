@@ -127,13 +127,6 @@ const serviceConfigs = [
       // Additional service-specific config
     },
   },
-  {
-    name: "github",
-    config: {
-      apiKey: "Bearer YOUR_GITHUB_TOKEN",
-      baseUrl: "https://api.github.com", // Optional custom base URL
-    },
-  },
 ];
 
 const user = new User(atb, serviceConfigs);
@@ -191,11 +184,7 @@ Load specific tool groups from services:
 
 ```typescript
 // Load specific tool groups
-await atb.loadServices([
-  "vercel",
-  "vercel/access-groups",
-  "github/repositories",
-]);
+await atb.loadServices(["vercel/access-groups", "vercel/projects"]);
 ```
 
 ### Tool Discovery
