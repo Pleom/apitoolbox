@@ -238,6 +238,74 @@ await atb.loadServices(["vercel/access-groups", "vercel/projects"]);
 
 Find and inspect tools:
 
+```typescript
+// List all tools
+const allTools = await atb.listTools();
+
+// Find a specific tool
+const tool = atb.findToolById("vercelRetrieveAListOfProjects");
+
+if (tool) {
+  console.log("Tool description:", tool.description);
+  console.log("Tool parameters:", tool.parameters);
+  console.log("Tool response schema:", tool.response);
+}
 ```
 
+### Response Validation
+
+Validate API responses against tool schemas:
+
+```typescript
+const result = await user.callTool("toolName", { parameters: {} });
+const isValid = await user.validateToolCall("toolName", result);
+
+if (!isValid) {
+  console.warn("Response doesn't match expected schema");
+}
 ```
+
+## TypeScript Support
+
+ApiToolBox provides comprehensive TypeScript types:
+
+```typescript
+import {
+  ApiToolBox,
+  User,
+  UserConfig,
+  ServiceConfig,
+  ToolCallError,
+  ToolName,
+  ApiToolBoxConfig,
+} from "apitoolbox";
+```
+
+## Directory Structure
+
+When you load services, ApiToolBox creates a `.apitoolbox` directory in your project root to cache service definitions:
+
+```
+your-project/
+├── .apitoolbox/
+│   ├── vercel/
+│   │   ├── page.json
+│   │   └── [tool-groups]/
+│   └── [other-services]/
+├── node_modules/
+└── package.json
+```
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines and submit pull requests to our [GitHub repository](https://github.com/pleom/apitoolbox).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+- 📧 Email: royce@pleom.com
+- 🐛 Issues: [GitHub Issues](https://github.com/pleom/apitoolbox/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/pleom/apitoolbox/discussions)
