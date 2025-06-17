@@ -3,8 +3,8 @@ import * as https from 'https';
 import * as http from 'http';
 
 // Global constant for the API base URL
-const API_BASE_URL = 'https://apitoolbox.dev';
-
+// const API_BASE_URL = 'https://apitoolbox.dev';
+const API_BASE_URL = 'http://localhost:5000';
 export class ServiceDownloader {
   /**
    * Downloads a service page from the API.

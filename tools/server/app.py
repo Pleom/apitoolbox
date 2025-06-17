@@ -50,6 +50,22 @@ def services_subpath_json(subpath):
     return serve_raw_json(subpath)
 
 
+@app.route("/dist.js")
+def serve_dist_js():
+    """Serve dist.js file"""
+    dist_file = Path(__file__).parent / "dist.js"
+    
+    if not dist_file.exists():
+        abort(404)
+    
+    try:
+        response = make_response(send_file(dist_file))
+        response.headers["Content-Type"] = "application/javascript"
+        return response
+    except IOError:
+        abort(500)
+
+
 def serve_json_page(subpath):
     """Serve JSON file as an HTML page"""
     if subpath == ".":

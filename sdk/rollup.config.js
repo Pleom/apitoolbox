@@ -41,6 +41,53 @@ const config = [
     ],
     external: ['fs', 'path', 'os'],
   },
+  // Browser build - UMD format for browser compatibility
+  {
+    input: 'src/browser/index.ts',
+    output: {
+      file: 'dist/browser/apitoolbox.js',
+      format: 'umd',
+      name: 'ApiToolBox',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      commonjs(),
+      typescript({
+        tsconfig: './tsconfig.json',
+        declaration: false,
+        outDir: 'dist/browser',
+      }),
+    ],
+    // No external dependencies for browser build - bundle everything
+    external: [],
+  },
+  // Browser build - ES modules for modern browsers
+  {
+    input: 'src/browser/index.ts',
+    output: {
+      file: 'dist/browser/apitoolbox.esm.js',
+      format: 'esm',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      commonjs(),
+      typescript({
+        tsconfig: './tsconfig.json',
+        declaration: false,
+        outDir: 'dist/browser',
+      }),
+    ],
+    // No external dependencies for browser build - bundle everything
+    external: [],
+  },
 ];
 
-export default config; 
+export default config;

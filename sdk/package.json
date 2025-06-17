@@ -12,6 +12,7 @@
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "browser": "dist/browser/apitoolbox.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist"
@@ -19,6 +20,7 @@
   "scripts": {
     "build": "npm run clean && npm run build:rollup && npm run build:types",
     "build:rollup": "rollup -c",
+    "build:browser": "npm run clean && rollup -c --filter browser",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
     "clean": "rimraf dist",
     "dev": "rollup -c -w",
@@ -36,7 +38,8 @@
     "api",
     "sdk",
     "typescript",
-    "tools"
+    "tools",
+    "browser"
   ],
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
@@ -70,9 +73,12 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
       "types": "./dist/types/index.d.ts"
+    },
+    "./browser": {
+      "import": "./dist/browser/apitoolbox.esm.js",
+      "script": "./dist/browser/apitoolbox.js",
+      "types": "./dist/types/browser/index.d.ts"
     }
   },
-  "dependencies": {
-    "undici": "^7.10.0"
-  }
+  "dependencies": {}
 }

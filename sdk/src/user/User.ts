@@ -62,9 +62,7 @@ export class User {
     if (tool.headers && Array.isArray(tool.headers)) {
       for (const header of tool.headers) {
         if (header.name && header.required) {
-          if (header.name === 'Authorization' && serviceConfig.apiKey) {
-            headers[header.name] = serviceConfig.apiKey;
-          } else if (serviceConfig[header.name]) {
+          if (serviceConfig[header.name]) {
             headers[header.name] = serviceConfig[header.name];
           } else {
             throw new ToolCallError(

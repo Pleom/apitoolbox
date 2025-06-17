@@ -5,6 +5,8 @@
 
 > Stateless API Mapping Context for LLM Tooling
 
+**🌐 Browse Services:** Visit [apitoolbox.dev/services](https://apitoolbox.dev/services) to see all available API services and their tools.
+
 ## Better than MCP? 🔧
 
 API Tool Box tools are **direct API mappings** that convert service APIs into LLM-compatible tool definitions. Each tool represents a specific API endpoint with proper parameter validation and response schemas.
@@ -80,6 +82,51 @@ async function main() {
 
 main();
 ```
+
+### Browser Version
+
+For browser usage, import the script directly from `apitoolbox.dev/dist.js`:
+
+**Client-Side Execution Benefits:** This approach executes API calls directly from the user's browser, enhancing security by keeping credentials client-side and eliminating server-side rate limiting issues that occur when multiple users share the same server IP address.
+
+```html
+<html>
+  <body>
+    <!-- Load the ApiToolBox browser SDK -->
+    <script src="https://apitoolbox.dev/dist.js"></script>
+
+    <script>
+      // Tool schema (get this from your backend using findToolById)
+      const vercelTool = {};
+
+      // Configure credentials
+      const credentials = [
+        {
+          name: "vercel",
+          config: { Authorization: "Bearer YOUR_API_KEY" },
+        },
+      ];
+
+      async function callTool() {
+        try {
+          const userClient = new ApiToolBox.UserClient(credentials);
+          const result = await userClient.callTool(vercelTool, {
+            parameters: {},
+            body: {},
+          });
+          console.log("Result:", result);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      window.addEventListener("load", callTool);
+    </script>
+  </body>
+</html>
+```
+
+**Backend Integration:** Use `atb.findToolById()` in your backend to get the complete tool schema and send it to your client, which can then execute the API request directly in the browser.
 
 ## Core Classes
 
@@ -191,74 +238,6 @@ await atb.loadServices(["vercel/access-groups", "vercel/projects"]);
 
 Find and inspect tools:
 
-```typescript
-// List all tools
-const allTools = await atb.listTools();
-
-// Find a specific tool
-const tool = atb.findToolById("vercelRetrieveAListOfProjects");
-
-if (tool) {
-  console.log("Tool description:", tool.description);
-  console.log("Tool parameters:", tool.parameters);
-  console.log("Tool response schema:", tool.response);
-}
 ```
 
-### Response Validation
-
-Validate API responses against tool schemas:
-
-```typescript
-const result = await user.callTool("toolName", { parameters: {} });
-const isValid = await user.validateToolCall("toolName", result);
-
-if (!isValid) {
-  console.warn("Response doesn't match expected schema");
-}
 ```
-
-## TypeScript Support
-
-ApiToolBox provides comprehensive TypeScript types:
-
-```typescript
-import {
-  ApiToolBox,
-  User,
-  UserConfig,
-  ServiceConfig,
-  ToolCallError,
-  ToolName,
-  ApiToolBoxConfig,
-} from "apitoolbox";
-```
-
-## Directory Structure
-
-When you load services, ApiToolBox creates a `.apitoolbox` directory in your project root to cache service definitions:
-
-```
-your-project/
-├── .apitoolbox/
-│   ├── vercel/
-│   │   ├── page.json
-│   │   └── [tool-groups]/
-│   └── [other-services]/
-├── node_modules/
-└── package.json
-```
-
-## Contributing
-
-Contributions are welcome! Please read our contributing guidelines and submit pull requests to our [GitHub repository](https://github.com/pleom/apitoolbox).
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-- 📧 Email: royce@pleom.com
-- 🐛 Issues: [GitHub Issues](https://github.com/pleom/apitoolbox/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/pleom/apitoolbox/discussions)
