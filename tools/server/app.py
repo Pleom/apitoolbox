@@ -49,10 +49,10 @@ def services_subpath_json(subpath):
     subpath = subpath.rstrip("/")
     return serve_raw_json(subpath)
 
-@app.route("/rest.json")
-def serve_rest_json():
-    """Serve rest.json file"""
-    json_file = Path(__file__).parent / "rest.json"
+@app.route("/<path:filename>.json")
+def serve_json_file(filename):
+    """Serve any .json file"""
+    json_file = Path(__file__).parent / f"{filename}.json"
     
     if not json_file.exists():
         abort(404)
