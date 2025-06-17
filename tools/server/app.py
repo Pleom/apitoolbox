@@ -49,6 +49,20 @@ def services_subpath_json(subpath):
     subpath = subpath.rstrip("/")
     return serve_raw_json(subpath)
 
+@app.route("/rest.json")
+def serve_rest_json():
+    """Serve rest.json file"""
+    json_file = Path(__file__).parent / "rest.json"
+    
+    if not json_file.exists():
+        abort(404)
+    
+    try:
+        response = make_response(send_file(json_file))
+        response.headers["Content-Type"] = "application/json"
+        return response
+    except IOError:
+        abort(500)
 
 @app.route("/dist.js")
 def serve_dist_js():
