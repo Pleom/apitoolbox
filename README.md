@@ -15,7 +15,7 @@ API Tool Box tools are **direct API mappings** that convert service APIs into LL
 
 ### 🤖 Programmatic Tool Generation
 
-Tools can be generated automatically using web scrapers and API documentation parsers. For example, all Vercel tools were generated using the [apitoolbox-scraper](https://github.com/Pleom/apitoolbox-scraper) which extracts API definitions and converts them into ATB tool format.
+Tools can be generated automatically using Open API specifications, web scrapers, and API documentation parsers. Generation utilities can be found at [apitoolbox-scraper](https://github.com/Pleom/apitoolbox-scraper) which extracts API definitions and converts them into ATB tool format.
 
 ## Why API Tool Box vs MCP? 🥊
 
