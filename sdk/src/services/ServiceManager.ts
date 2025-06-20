@@ -82,9 +82,18 @@ export class ServiceManager {
   /**
    * Gets filtered and formatted tools for API consumption.
    * @param model - The model format to use: 'openai', 'gemini', or 'claude' (default: 'gemini')
-   * @returns Array of tools formatted according to the specified model standard.
+   * @param filter - Whether to filter and format tools (default: true). If false, returns raw tools array.
+   * @returns Array of tools formatted according to the specified model standard, or raw tools if filter is false.
    */
-  public listTools(model: 'openai' | 'gemini' | 'claude' = 'gemini'): any[] {
+  public listTools(
+    model: 'openai' | 'gemini' | 'claude' = 'gemini',
+    filter: boolean = true
+  ): any[] {
+    // If filter is false, return raw tools array
+    if (!filter) {
+      return [...this.tools]; // Return a copy to prevent external modification
+    }
+
     const baseTools = this.tools.map((tool) => {
       // Build the result object in the correct order
       const result: any = {};

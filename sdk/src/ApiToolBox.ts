@@ -21,12 +21,14 @@ export class ApiToolBox {
   /**
    * Gets all loaded tools from connected services.
    * @param model - The model format to use: 'openai', 'gemini', or 'claude' (default: 'gemini')
-   * @returns Array of tools formatted according to the specified model standard.
+   * @param filter - Whether to filter and format tools (default: true). If false, returns raw tools array.
+   * @returns Array of tools formatted according to the specified model standard, or raw tools if filter is false.
    */
   public async listTools(
-    model: 'openai' | 'gemini' | 'claude' = 'gemini'
+    model: 'openai' | 'gemini' | 'claude' = 'gemini',
+    filter: boolean = true
   ): Promise<any[]> {
-    return this.serviceManager.listTools(model);
+    return this.serviceManager.listTools(model, filter);
   }
 
   /**
