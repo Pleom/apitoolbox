@@ -33,6 +33,7 @@ Tools can be generated automatically using Open API specifications, web scrapers
 
 ## Installation
 
+```js
   // List available tools
   const tools = await atb.listTools();
   console.log('Available tools:', tools);
