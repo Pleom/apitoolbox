@@ -27,9 +27,12 @@ export class UserClient {
    * Calls a tool with the specified tool object and parameters
    * @param tool - The complete tool object (fetched externally)
    * @param parameters - Optional input parameters for the tool
-   * @returns Promise that resolves with the API response
+   * @returns Promise that resolves with an object containing status and data
    */
-  public async callTool(tool: any, parameters: any = {}): Promise<any> {
+  public async callTool(tool: any, parameters: any = {}): Promise<{
+    status: number;
+    data: any;
+  }> {
     if (!tool) {
       throw new ToolCallError('Tool object is required');
     }
@@ -111,19 +114,24 @@ export class UserClient {
 
     try {
       const response = await fetch(url.toString(), fetchOptions);
-
-      if (!response.ok) {
-        throw new ToolCallError(
-          `API request failed with status ${response.status}: ${response.statusText}`
-        );
+      
+      let responseData: any;
+      try {
+        responseData = await response.json();
+      } catch (jsonError) {
+        // If JSON parsing fails, try to get text instead
+        try {
+          responseData = await response.text();
+        } catch (textError) {
+          responseData = null;
+        }
       }
 
-      const responseData = await response.json();
-      return responseData;
+      return {
+        status: response.status,
+        data: responseData,
+      };
     } catch (error) {
-      if (error instanceof ToolCallError) {
-        throw error;
-      }
       throw new ToolCallError(
         `Network error: ${error instanceof Error ? error.message : 'Unknown error'}`
       );

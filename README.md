@@ -20,8 +20,7 @@ Tools can be generated automatically using Open API specifications, web scrapers
 ## Why API Tool Box vs MCP? 🥊
 
 | Feature                | API Tool Box ✅                               | MCP ❌                                       |
-| ---------------------- | --------------------------------------------- | -------------------------------------------- |
-| **Architecture**       | Stateless - no servers required               | Stateful - requires multiple running servers |
+np| **Architecture**       | Stateless - no servers required               | Stateful - requires multiple running servers |
 | **Language Agnostic**  | ✅ Run from any language, use the same tools  | ❌ Tied to a specific runtime                |
 | **Execution Model**    | Pure API requests                             | Executes arbitrary code                      |
 | **Multi-user Support** | ✅ Single server supports multiple users/SaaS | ❌ Complex server management per user        |
@@ -108,14 +107,21 @@ For browser usage, import the script directly from `apitoolbox.dev/dist.js`:
         },
       ];
 
-      async function callTool() {
+              async function callTool() {
         try {
           const userClient = new ApiToolBox.UserClient(credentials);
           const result = await userClient.callTool(vercelTool, {
             parameters: {},
             body: {},
           });
-          console.log('Result:', result);
+              console.log('Status:', result.status);
+    console.log('Data:', result.data);
+    
+    if (result.status === 200) {
+      console.log('Success:', result.data);
+    } else {
+      console.log('API Error:', result.status, result.data);
+    }
         } catch (error) {
           console.error('Error:', error);
         }
