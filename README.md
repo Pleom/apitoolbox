@@ -305,7 +305,7 @@ your-project/
 
 ## Contributing
 
-Contributions are welcome! Please read our contributing guidelines and submit pull requests to our [GitHub repository](https://github.com/pleom/apitoolbox).
+We welcome contributions to API Tool Box! Please see our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on how to get started, development workflow, coding standards, and how to submit pull requests.
 
 ## License
 
