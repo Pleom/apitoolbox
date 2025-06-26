@@ -20,7 +20,8 @@ Tools can be generated automatically using Open API specifications, web scrapers
 ## Why API Tool Box vs MCP? 🥊
 
 | Feature                | API Tool Box ✅                               | MCP ❌                                       |
-np| **Architecture**       | Stateless - no servers required               | Stateful - requires multiple running servers |
+|------------------------|----------------------------------------------|----------------------------------------------|
+| **Architecture**       | Stateless - no servers required               | Stateful - requires multiple running servers |
 | **Language Agnostic**  | ✅ Run from any language, use the same tools  | ❌ Tied to a specific runtime                |
 | **Execution Model**    | Pure API requests                             | Executes arbitrary code                      |
 | **Multi-user Support** | ✅ Single server supports multiple users/SaaS | ❌ Complex server management per user        |
@@ -31,22 +32,6 @@ np| **Architecture**       | Stateless - no servers required               | Sta
 **🎯 Goal:** Build a comprehensive monorepo of all service integrations, creating a single source of truth for LLMs to connect to any API.
 
 ## Installation
-
-```bash
-npm install apitoolbox
-```
-
-## Quick Start
-
-```typescript
-import { ApiToolBox, User, ToolCallError } from 'apitoolbox';
-
-async function main() {
-  // Create an ApiToolBox instance
-  const atb = new ApiToolBox();
-
-  // Load services (downloads and connects service definitions)
-  await atb.loadServices(['vercel']);
 
   // List available tools
   const tools = await atb.listTools();
