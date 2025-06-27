@@ -34,15 +34,15 @@ Tools can be generated automatically using Open API specifications, web scrapers
 ## Installation
 
 ```typescript
-import { ApiToolBox, User, ToolCallError } from "apitoolbox";Add commentMore actions
+import { ApiToolBox, User, ToolCallError } from "apitoolbox";
 
 async function main() {
   // Create an ApiToolBox instance
   const atb = new ApiToolBox();
 
-  // Load services (downloads and connects service definitions)Add commentMore actions
+  // Load services (downloads and connects service definitions)
   await atb.loadServices(["vercel"]);
-  
+
   // List available tools
   const tools = await atb.listTools();
   console.log('Available tools:', tools);
