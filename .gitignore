@@ -47,3 +47,9 @@ tools/server/services/
 # Misc
 .DS_Store
 Thumbs.db
+
+
+python-sdk/.apitoolbox/
+__pycache__/
+*.py[cod]
+*$py.class

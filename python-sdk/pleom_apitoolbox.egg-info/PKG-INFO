@@ -1,0 +1,292 @@
+Metadata-Version: 2.4
+Name: pleom-apitoolbox
+Version: 1.0.1
+Summary: Stateless API Mapping Context for LLM Tooling - Python SDK
+Home-page: https://github.com/pleom/apitoolbox
+Author: Royce Arockiasamy
+Author-email: Royce Arockiasamy <royce@pleom.com>
+Maintainer-email: Royce Arockiasamy <royce@pleom.com>
+Project-URL: Homepage, https://apitoolbox.dev
+Project-URL: Repository, https://github.com/pleom/apitoolbox
+Project-URL: Bug Tracker, https://github.com/pleom/apitoolbox/issues
+Keywords: api,sdk,python,tools,llm,ai,async
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: aiohttp>=3.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.20.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: isort>=5.10.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Requires-Dist: flake8>=5.0.0; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-python
+
+
+# ApiToolBox Python SDK
+
+Stateless API Mapping Context for LLM Tooling - Python SDK
+
+## Overview
+
+ApiToolBox provides a unified interface for loading and managing API service definitions, making it easy to integrate various APIs into LLM applications. This Python SDK is designed for server-side usage and provides async support for efficient API operations.
+
+## Installation
+
+```bash
+pip install pleom-apitoolbox
+```
+
+## Quick Start
+
+### Basic Usage
+
+```python
+import asyncio
+from pleom_apitoolbox import ApiToolBox, User, ServiceConfig
+
+async def main():
+    # Initialize ApiToolBox
+    api_toolbox = ApiToolBox()
+    
+    # Load services
+    await api_toolbox.load_services(['vercel', 'github'])
+    
+    # List available services
+    services = api_toolbox.get_services()
+    print(f"Loaded services: {services}")
+    
+    # List available tools
+    tools = await api_toolbox.list_tools(model='openai')
+    print(f"Available tools: {len(tools)}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+### Making Authenticated API Calls
+
+```python
+import asyncio
+from pleom_apitoolbox import ApiToolBox, User, ServiceConfig
+
+async def main():
+    # Initialize ApiToolBox and load services
+    api_toolbox = ApiToolBox()
+    await api_toolbox.load_services(['vercel'])
+    
+    # Configure service authentication
+    service_configs = [
+        ServiceConfig('vercel', {
+            'Authorization': 'Bearer your-vercel-token'
+        })
+    ]
+    
+    # Create user instance
+    user = User(api_toolbox, service_configs)
+    
+    # Find a specific tool
+    tool = api_toolbox.find_tool_by_id('vercelRetrieveAListOfProjects')
+    if tool:
+        print(f"Found tool: {tool['name']}")
+        
+        # Call the tool
+        try:
+            result = await user.call_tool('vercelRetrieveAListOfProjects')
+            print(f"API Response: {result}")
+        except Exception as e:
+            print(f"Error calling tool: {e}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+### Tool Format Examples
+
+```python
+# Get tools in different formats
+tools_openai = await api_toolbox.list_tools(model='openai')
+tools_claude = await api_toolbox.list_tools(model='claude') 
+tools_gemini = await api_toolbox.list_tools(model='gemini')
+
+# Raw tools (unformatted)
+raw_tools = await api_toolbox.list_tools(filter_tools=False)
+```
+
+## API Reference
+
+### ApiToolBox
+
+Main class for managing API services and tools.
+
+#### Methods
+
+- `get_services() -> List[str]`: Get list of loaded services
+- `list_tools(model='gemini', filter_tools=True) -> List[Dict]`: Get formatted tools
+- `find_tool_by_id(tool_id: str) -> Optional[Dict]`: Find tool by ID
+- `load_services(services: List[str], force_download=False)`: Load services
+- `unload_service(service_name: str)`: Unload a service
+
+### User
+
+Class for making authenticated API calls.
+
+#### Methods
+
+- `call_tool(tool_id: str, parameters=None) -> Dict`: Call an API tool
+- `validate_tool_call(tool_id: str, response) -> bool`: Validate API response
+- `get_config() -> Dict`: Get current configuration
+- `update_config(config: Dict)`: Update configuration
+
+### ServiceConfig
+
+Configuration for API services.
+
+```python
+config = ServiceConfig('service_name', {
+    'Authorization': 'Bearer token',
+    'apiKey': 'your-api-key',
+    # ... other headers/config
+})
+```
+
+## Development
+
+### Setup Development Environment
+
+```bash
+git clone https://github.com/pleom/apitoolbox.git
+cd apitoolbox
+pip install -e ".[dev]"
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=pleom_apitoolbox --cov-report=html
+
+# Run specific test
+pytest tests/test_api_toolbox.py
+```
+
+### Code Formatting
+
+```bash
+# Format code
+black pleom_apitoolbox/
+isort pleom_apitoolbox/
+
+# Type checking
+mypy pleom_apitoolbox/
+
+# Linting
+flake8 pleom_apitoolbox/
+```
+
+## Testing Your Installation
+
+Create a test script:
+
+```python
+# test_installation.py
+import asyncio
+from pleom_apitoolbox import ApiToolBox
+
+async def test_basic_functionality():
+    print("Testing ApiToolBox...")
+    
+    # Test basic initialization
+    api_toolbox = ApiToolBox()
+    print("✓ ApiToolBox initialized successfully")
+    
+    # Test getting services (should be empty initially)
+    services = api_toolbox.get_services()
+    print(f"✓ Services: {services}")
+    
+    # Test listing tools (should be empty initially)
+    tools = await api_toolbox.list_tools()
+    print(f"✓ Tools: {len(tools)} tools found")
+    
+    print("✓ All tests passed!")
+
+if __name__ == "__main__":
+    asyncio.run(test_basic_functionality())
+```
+
+Run the test:
+
+```bash
+python test_installation.py
+```
+
+## Deployment to PyPI
+
+### Prerequisites
+
+1. Install build tools:
+```bash
+pip install build twine
+```
+
+2. Create PyPI account and get API token
+
+### Building the Package
+
+```bash
+# Clean previous builds
+rm -rf dist/ build/ *.egg-info/
+
+# Build the package
+python -m build
+```
+
+### Upload to PyPI
+
+```bash
+# Upload to Test PyPI first
+twine upload --repository testpypi dist/*
+
+# Test installation from Test PyPI
+pip install --index-url https://test.pypi.org/simple/ pleom-apitoolbox
+
+# Upload to production PyPI
+twine upload dist/*
+```
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Run the test suite
+6. Submit a pull request
+
+## Support
+
+- GitHub Issues: https://github.com/pleom/apitoolbox/issues
+- Homepage: https://apitoolbox.dev
