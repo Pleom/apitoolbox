@@ -33,6 +33,12 @@ Tools can be generated automatically using Open API specifications, web scrapers
 
 ## Installation
 
+```bash
+npm install apitoolbox
+```
+
+### Getting Started
+
 ```typescript
 import { ApiToolBox, User, ToolCallError } from "apitoolbox";
 
